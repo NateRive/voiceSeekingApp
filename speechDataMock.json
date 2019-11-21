@@ -1,0 +1,439 @@
+{
+  "data": [
+    {
+      "startTime": {},
+      "endTime": {
+        "seconds": "2",
+        "nanos": 500000000
+      },
+      "word": "こんにちは|コンニチワ"
+    },
+    {
+      "startTime": {
+        "seconds": "2",
+        "nanos": 500000000
+      },
+      "endTime": {
+        "seconds": "3",
+        "nanos": 800000000
+      },
+      "word": "私|アタシ,ワタクシ,ワタシ"
+    },
+    {
+      "startTime": {
+        "seconds": "3",
+        "nanos": 800000000
+      },
+      "endTime": {
+        "seconds": "4"
+      },
+      "word": "は|ワ"
+    },
+    {
+      "startTime": {
+        "seconds": "4"
+      },
+      "endTime": {
+        "seconds": "4",
+        "nanos": 700000000
+      },
+      "word": "河野|カワノ,コーノ"
+    },
+    {
+      "startTime": {
+        "seconds": "4",
+        "nanos": 700000000
+      },
+      "endTime": {
+        "seconds": "5",
+        "nanos": 200000000
+      },
+      "word": "宏明|ヒロアキ"
+    },
+    {
+      "startTime": {
+        "seconds": "5",
+        "nanos": 200000000
+      },
+      "endTime": {
+        "seconds": "5",
+        "nanos": 400000000
+      },
+      "word": "です|デス"
+    },
+    {
+      "startTime": {
+        "seconds": "5",
+        "nanos": 400000000
+      },
+      "endTime": {
+        "seconds": "7",
+        "nanos": 700000000
+      },
+      "word": "もとより|モトヨリ"
+    },
+    {
+      "startTime": {
+        "seconds": "7",
+        "nanos": 700000000
+      },
+      "endTime": {
+        "seconds": "8",
+        "nanos": 600000000
+      },
+      "word": "中国|チューゴク"
+    },
+    {
+      "startTime": {
+        "seconds": "8",
+        "nanos": 600000000
+      },
+      "endTime": {
+        "seconds": "8",
+        "nanos": 700000000
+      },
+      "word": "語|ゴ"
+    },
+    {
+      "startTime": {
+        "seconds": "8",
+        "nanos": 700000000
+      },
+      "endTime": {
+        "seconds": "8",
+        "nanos": 700000000
+      },
+      "word": "と|ト"
+    },
+    {
+      "startTime": {
+        "seconds": "8",
+        "nanos": 700000000
+      },
+      "endTime": {
+        "seconds": "9",
+        "nanos": 200000000
+      },
+      "word": "日本|ニッポン,ニホン"
+    },
+    {
+      "startTime": {
+        "seconds": "9",
+        "nanos": 200000000
+      },
+      "endTime": {
+        "seconds": "9",
+        "nanos": 400000000
+      },
+      "word": "語|ゴ"
+    },
+    {
+      "startTime": {
+        "seconds": "9",
+        "nanos": 400000000
+      },
+      "endTime": {
+        "seconds": "9",
+        "nanos": 600000000
+      },
+      "word": "が|ガ"
+    },
+    {
+      "startTime": {
+        "seconds": "9",
+        "nanos": 600000000
+      },
+      "endTime": {
+        "seconds": "10",
+        "nanos": 500000000
+      },
+      "word": "幼少|ヨーショー"
+    },
+    {
+      "startTime": {
+        "seconds": "10",
+        "nanos": 500000000
+      },
+      "endTime": {
+        "seconds": "10",
+        "nanos": 700000000
+      },
+      "word": "期|キ"
+    },
+    {
+      "startTime": {
+        "seconds": "10",
+        "nanos": 700000000
+      },
+      "endTime": {
+        "seconds": "10",
+        "nanos": 800000000
+      },
+      "word": "の|ノ"
+    },
+    {
+      "startTime": {
+        "seconds": "10",
+        "nanos": 800000000
+      },
+      "endTime": {
+        "seconds": "10",
+        "nanos": 900000000
+      },
+      "word": "頃|コロ,ゴロ"
+    },
+    {
+      "startTime": {
+        "seconds": "10",
+        "nanos": 900000000
+      },
+      "endTime": {
+        "seconds": "11",
+        "nanos": 100000000
+      },
+      "word": "から|カラ"
+    },
+    {
+      "startTime": {
+        "seconds": "11",
+        "nanos": 100000000
+      },
+      "endTime": {
+        "seconds": "11",
+        "nanos": 800000000
+      },
+      "word": "大好き|ダイスキ"
+    },
+    {
+      "startTime": {
+        "seconds": "11",
+        "nanos": 800000000
+      },
+      "endTime": {
+        "seconds": "12",
+        "nanos": 300000000
+      },
+      "word": "で|デ"
+    },
+    {
+      "startTime": {
+        "seconds": "12",
+        "nanos": 300000000
+      },
+      "endTime": {
+        "seconds": "13",
+        "nanos": 400000000
+      },
+      "word": "常|ジョー,ツネ"
+    },
+    {
+      "startTime": {
+        "seconds": "13",
+        "nanos": 400000000
+      },
+      "endTime": {
+        "seconds": "13",
+        "nanos": 500000000
+      },
+      "word": "日頃|ヒゴロ"
+    },
+    {
+      "startTime": {
+        "seconds": "13",
+        "nanos": 500000000
+      },
+      "endTime": {
+        "seconds": "13",
+        "nanos": 900000000
+      },
+      "word": "から|カラ"
+    },
+    {
+      "startTime": {
+        "seconds": "13",
+        "nanos": 900000000
+      },
+      "endTime": {
+        "seconds": "14",
+        "nanos": 700000000
+      },
+      "word": "毎日|マイニチ"
+    },
+    {
+      "startTime": {
+        "seconds": "14",
+        "nanos": 700000000
+      },
+      "endTime": {
+        "seconds": "15",
+        "nanos": 500000000
+      },
+      "word": "時間|ジカン"
+    },
+    {
+      "startTime": {
+        "seconds": "15",
+        "nanos": 500000000
+      },
+      "endTime": {
+        "seconds": "15",
+        "nanos": 600000000
+      },
+      "word": "を|オ"
+    },
+    {
+      "startTime": {
+        "seconds": "15",
+        "nanos": 600000000
+      },
+      "endTime": {
+        "seconds": "16",
+        "nanos": 100000000
+      },
+      "word": "何か|ナニカ"
+    },
+    {
+      "startTime": {
+        "seconds": "16",
+        "nanos": 100000000
+      },
+      "endTime": {
+        "seconds": "16",
+        "nanos": 200000000
+      },
+      "word": "と|ト"
+    },
+    {
+      "startTime": {
+        "seconds": "16",
+        "nanos": 200000000
+      },
+      "endTime": {
+        "seconds": "16",
+        "nanos": 600000000
+      },
+      "word": "見つけ|ミツケ"
+    },
+    {
+      "startTime": {
+        "seconds": "16",
+        "nanos": 600000000
+      },
+      "endTime": {
+        "seconds": "16",
+        "nanos": 700000000
+      },
+      "word": "て|テ"
+    },
+    {
+      "startTime": {
+        "seconds": "16",
+        "nanos": 700000000
+      },
+      "endTime": {
+        "seconds": "16",
+        "nanos": 900000000
+      },
+      "word": "は|ワ"
+    },
+    {
+      "startTime": {
+        "seconds": "16",
+        "nanos": 900000000
+      },
+      "endTime": {
+        "seconds": "17",
+        "nanos": 600000000
+      },
+      "word": "それ|ソレ"
+    },
+    {
+      "startTime": {
+        "seconds": "17",
+        "nanos": 600000000
+      },
+      "endTime": {
+        "seconds": "17",
+        "nanos": 700000000
+      },
+      "word": "を|オ"
+    },
+    {
+      "startTime": {
+        "seconds": "17",
+        "nanos": 700000000
+      },
+      "endTime": {
+        "seconds": "18",
+        "nanos": 300000000
+      },
+      "word": "学習|ガクシュー"
+    },
+    {
+      "startTime": {
+        "seconds": "18",
+        "nanos": 300000000
+      },
+      "endTime": {
+        "seconds": "18",
+        "nanos": 500000000
+      },
+      "word": "に|ニ"
+    },
+    {
+      "startTime": {
+        "seconds": "18",
+        "nanos": 500000000
+      },
+      "endTime": {
+        "seconds": "19",
+        "nanos": 200000000
+      },
+      "word": "投じ|トージ"
+    },
+    {
+      "startTime": {
+        "seconds": "19",
+        "nanos": 200000000
+      },
+      "endTime": {
+        "seconds": "19",
+        "nanos": 300000000
+      },
+      "word": "て|テ"
+    },
+    {
+      "startTime": {
+        "seconds": "19",
+        "nanos": 300000000
+      },
+      "endTime": {
+        "seconds": "19",
+        "nanos": 300000000
+      },
+      "word": "い|イ"
+    },
+    {
+      "startTime": {
+        "seconds": "19",
+        "nanos": 300000000
+      },
+      "endTime": {
+        "seconds": "19",
+        "nanos": 500000000
+      },
+      "word": "まし|マシ"
+    },
+    {
+      "startTime": {
+        "seconds": "19",
+        "nanos": 500000000
+      },
+      "endTime": {
+        "seconds": "19",
+        "nanos": 600000000
+      },
+      "word": "た|タ"
+    }
+  ]
+}
