@@ -11,7 +11,8 @@
       </div>
     </div>
     <div class="bottom-area">
-      <audio v-if="fileName" ref="audio" :src="`Audio/${fileName}`" controls type="audio/mp3"></audio>
+      <!-- :src="`Audio/${fileName}`" -->
+      <audio id="audio" v-if="fileName" :src="`${}`" ref="audio" controls></audio>
     </div>
   </div>
 </template>
@@ -46,22 +47,31 @@ export default {
   },
   methods: {
     onClickItemHandler: async function(event) {
+      var reader = new FileReader();
+      reader.addEventListener("load", () => {
+        console.log(reader.result);
+        this.$refs.audio.src = reader.result;
+        this.$refs.audio.load();
+        this.$refs.audio.play();
+      });
       this.fileName = event.row.name;
       if (event.row.isfile) {
         wordModel.get(event.row.id).then(data => {
-          console.log(data);
           this.sentenceData = data;
         });
         event.idTree.push(event.row.name);
         const pathTree = event.idTree.join("/");
-        // speechModel.post(pathTree).then(data => {
-        // console.log(data.data);
-        // const blob = new Blob(data.data, { type: "audio/mp3" });
-        // const blobURL = window.URL.createObjectURL(blob);
-        // reader.readAsDataURL(blob);
-        // console.log(blobURL);
-        // this.$refs.audio.src = blobURL;
-        // });
+        speechModel.post(pathTree).then(async data => {
+          // console.log(data.data);
+          const blob = new Blob(data.data, { type: "audio/mp3" });
+          console.log(blob);
+          const blobURL = window.URL.createObjectURL(blob);
+          // reader.readAsDataURL(blob);
+          console.log(blobURL);
+          this.$refs.audio.src = blobURL;
+          await this.$refs.audio.load();
+          await this.$refs.audio.play();
+        });
       }
     },
     onClickSentenceWordHandler: function(startTime) {
