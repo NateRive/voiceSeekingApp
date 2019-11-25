@@ -12,6 +12,7 @@
   "dependencies": {
     "@google-cloud/speech": "^2.3.0",
     "aws-sdk": "^2.399.0",
+    "cors": "^2.8.5",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
     "fs-extra": "^7.0.1",

@@ -1,12 +1,12 @@
 // const Dao = require('./dao')
 const Sequelize = require('sequelize');
-const sequelize =  require("./database")
-const mapper = require('../models/word')(sequelize,  Sequelize)
+const sequelize = require("./database")
+const mapper = require('../models/word')(sequelize, Sequelize)
 
-class WordDao  {
+class WordDao {
     constructor() {
     }
-    
+
     get mapper() {
         return mapper;
     }
@@ -15,6 +15,19 @@ class WordDao  {
         sequelize.transaction(async (transaction) => {
             for (const word of words) {
                 this.mapper.create(word, transaction)
+            }
+        })
+    }
+
+    /**
+     * @param {Number} fileId 
+     * @return {Array} [{id: ?? ...}, {}]
+     */
+    async getDatasByFileId(fileId) {
+        return await this.mapper.findAll({
+            raw: true,
+            where: {
+                location_id: fileId
             }
         })
     }

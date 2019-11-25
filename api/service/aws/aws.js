@@ -1,8 +1,9 @@
 var AWS = require('aws-sdk')
+const s3_bucket_name = require('../../util/const').S3_BUCKET_NAME
 // AWS.config.update()
 var s3 = new AWS.S3()
 // if (process.env.NODE_ENV === 'development') {
-    // AWS.config.credentials = new AWS.SharedIniFileCredentials({ profile: 'private' });
+//     AWS.config.credentials = new AWS.SharedIniFileCredentials({ profile: 'default' });
 // }
 
 class awsObject {
@@ -10,10 +11,10 @@ class awsObject {
 
     }
 
-    async getDataFromS3(bucket, file) {
+    async getDataFromS3(path) {
         var params = {
-            Bucket: bucket,
-            Key: file
+            Bucket: s3_bucket_name,
+            Key: path
         }
         return new Promise((resolve, reject) => {
             s3.getObject(params, (err, data) => {

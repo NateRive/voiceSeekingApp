@@ -1,15 +1,21 @@
 var express = require('express')
 var app = express();
+const cors = require('cors')
 
-const convert = require('./router/convert')
+const speech = require('./router/speech')
+const location = require('./router/location')
+const word = require('./router/word')
 // const clientRequest = require('./router/clientRequest')
 
-var servver = app.listen(3000, function() {
-    console.log("Node.js is listening on port" + servver.address().port)
+var server = app.listen(3000, function () {
+  console.log("Node.js is listening on port" + server.address().port)
 })
-
+app.use(express.json())
+app.use(cors())
 app.use(express.static(__dirname + '/public'));
-app.use('/convert', convert);
+app.use('/api/speech', speech);
+app.use('/api/location', location)
+app.use('/api/word', word)
 
 // login画面のページを返すAPI (静的ファイルとして処理)
 

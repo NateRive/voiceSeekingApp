@@ -10,8 +10,8 @@
             "name": "Launch Program",
             "program": "${workspaceFolder}/.bin/www",
             "env": {
-                "NODE_ENV": "development",
-                "AWS_PROFILE": "private"
+                "NODE_ENV": "mock"
+                // "NODE_ENV": "mock"
             }
         },
         {

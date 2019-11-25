@@ -1,13 +1,13 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const location = sequelize.define('location', {
-    folder: DataTypes.STRING,
-    file: DataTypes.STRING,
-    progress: DataTypes.INTEGER
+    name: DataTypes.STRING,
+    parent_id: DataTypes.INTEGER,
+    isfile: DataTypes.BOOLEAN
   }, {
     underscored: true,
   });
-  location.associate = function(models) {
+  location.associate = function (models) {
     // associations can be defined here
     location.hasMany(models.word);
   };

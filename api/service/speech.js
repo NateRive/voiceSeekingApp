@@ -5,45 +5,53 @@ const client = new speech.SpeechClient();
 const WordDao = require("../dao/word-dao");
 const AwsObject = require("./aws/aws");
 const awsObject = new AwsObject();
+const MOCK = "mock"
 var fs = require("fs-extra");
 
 class Speech {
   constructor(bucketName, fileName) {
-    this.bucketName = bucketName;
-    this.fileName = fileName;
+  }
+
+  async getAudioFromS3(pathTree) {
+    return await awsObject.getDataFromS3(pathTree)
   }
 
   async converter() {
+    const parent_id = 1;
+    const name = "outsidersample1.flac";
+    const isfile = true
     const locationDao = new LocationDao();
     const wordDao = new WordDao();
     const locationResult = await locationDao.createLocation(
-      this.bucketName,
-      this.fileName
+      name,
+      parent_id,
+      isfile
     );
-    const rawData = await awsObject.getDataFromS3(
-      this.bucketName,
-      this.fileName
-    );
+    // const rawData = await awsObject.getDataFromS3(
+    //   "1/outsidersample1.flac"
+    // );
+    const rawData = ""
     console.log(rawData.toString);
-    // const audioResult = await this.googleSpeechAPI(rawData, locationResult);
-    const audioResult = await this.googleSpeechAPIMock(rawData, locationResult);
-    // const test = JSON.parse(fs.readFileSync('./speechDataMock.json', 'utf8'))
-
+    if (process.env.NODE_ENV == MOCK) {
+      var audioResult = await this.googleSpeechAPIMock(rawData, locationResult);
+    } else {
+      var audioResult = await this.googleSpeechAPI(rawData, locationResult);
+    }
     await wordDao.bulkCeate(audioResult)
-    this.notifyToPeople();
+    // this.notifyToPeople();
   }
 
   async googleSpeechAPIMock(rawData, locationResult) {
     const test = JSON.parse(fs.readFileSync("./speechDataMock.json", "utf8"));
-    return this.formatSeparatedWordData(test.data, locationResult);
+    return test.transcription
   }
 
   async googleSpeechAPI(audioData, locationResult) {
     const audio = {
-      content: audioData
+      // content: audioData
+      uri: "gs://audio-demo/outsidersample1.flac"
     };
     const config = {
-      encoding: "FLAC",
       sampleRateHertz: 48000,
       languageCode: "ja-JP",
       enableWordTimeOffsets: true
@@ -64,18 +72,21 @@ class Speech {
       .then(data => {
         const response = data[0];
         console.log(response.results);
-        // response.results.forEach(result => {
-        //   // transcription.push(result.alternatives[0].transcript)
-        //   console.log(`Transcription: ${result.alternatives[0].transcript}`);
-        //   var transcription = this.formatSeparatedWordData(
-        //     result.alternatives[0].words, locationResult
-        //   );
-        // });
+        var transcription = []
+        response.results.forEach(result => {
+          // transcription.push(result.alternatives[0].transcript)
+          // console.log(`Transcription: ${result.alternatives[0].transcript}`);
+          const res = this.formatSeparatedWordData(
+            result.alternatives[0].words, locationResult
+          );
+          transcription = transcription.concat(res)
+        });
+
         const json = JSON.stringify({
-          data: response.results[0].alternatives[0].words
+          transcription
         });
         fs.writeFileSync("./speechDataMock.json", json);
-        // return transcription;
+        return transcription;
       })
       .catch(err => {
         console.error("GCPとの通信でエラーが発生:", err);
