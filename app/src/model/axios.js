@@ -5,6 +5,8 @@ console.log(process.env.NODE_ENV)
 if (process.env.NODE_ENV == DEVELOP) {
     console.log("a")
     var domain = "http://localhost:3000"
+} else if (process.env.NODE_ENV == PREVIEW) {
+    var domain = "http://54.80.183.167:3000"
 }
 const baseURL = `${domain}/api`
 const axiosObject = axios.create({

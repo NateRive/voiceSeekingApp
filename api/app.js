@@ -16,7 +16,7 @@ app.use(express.static(__dirname + '/public'));
 app.use('/api/speech', speech);
 app.use('/api/location', location)
 app.use('/api/word', word)
-
+console.log("iiiiiiiiiiiiiiiiiiiii", process.env.NODE_ENV)
 // login画面のページを返すAPI (静的ファイルとして処理)
 
 // login後の画面を返すAPI pugテンプレートエンジンを使用
