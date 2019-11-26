@@ -22,9 +22,11 @@ router.post('/', async (req, res, next) => {
 router.get('/', async (req, res, next) => {
     try {
         // console.log(req.query.path)
-        const buffer = await speechService.getAudioFromS3(req.query.path)
-        res.set('Content-Type', "audio/mp3")
-        res.send(buffer).end()
+        const buffer = await speechService.getAudioFromS3(req.query.path, req.headers.range)
+        res.set('Content-Type', buffer.ContentType)
+        res.set('Content-Range', buffer.ContentRange)
+        // res.set('ContentLength', data.ContentLength)
+        res.status(206).send(buffer.Body).end()
     } catch (err) {
         res.status(404).send({ error: err.stack })
     }

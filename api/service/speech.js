@@ -12,8 +12,8 @@ class Speech {
   constructor(bucketName, fileName) {
   }
 
-  async getAudioFromS3(pathTree) {
-    return await awsObject.getDataFromS3(pathTree)
+  async getAudioFromS3(pathTree, range) {
+    return await awsObject.getDataFromS3(pathTree, range)
   }
 
   async converter() {

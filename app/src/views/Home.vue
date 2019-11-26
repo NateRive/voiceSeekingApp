@@ -11,8 +11,8 @@
       </div>
     </div>
     <div class="bottom-area">
-      <!-- :src="`Audio/${fileName}`" -->
-      <audio id="audio" v-if="fileName" :src="`${}`" ref="audio" controls></audio>
+      <!--  -->
+      <audio id="audio" :src="audioSrc" preload="auto" ref="audio" controls autoplay></audio>
     </div>
   </div>
 </template>
@@ -44,16 +44,10 @@ export default {
   props: {},
   async created() {
     this.shownData = await locationModel.get();
+    var vm = this;
   },
   methods: {
     onClickItemHandler: async function(event) {
-      var reader = new FileReader();
-      reader.addEventListener("load", () => {
-        console.log(reader.result);
-        this.$refs.audio.src = reader.result;
-        this.$refs.audio.load();
-        this.$refs.audio.play();
-      });
       this.fileName = event.row.name;
       if (event.row.isfile) {
         wordModel.get(event.row.id).then(data => {
@@ -61,21 +55,14 @@ export default {
         });
         event.idTree.push(event.row.name);
         const pathTree = event.idTree.join("/");
-        speechModel.post(pathTree).then(async data => {
-          // console.log(data.data);
-          const blob = new Blob(data.data, { type: "audio/mp3" });
-          console.log(blob);
-          const blobURL = window.URL.createObjectURL(blob);
-          // reader.readAsDataURL(blob);
-          console.log(blobURL);
-          this.$refs.audio.src = blobURL;
-          await this.$refs.audio.load();
-          await this.$refs.audio.play();
-        });
+        const audioSrc = "http://localhost:3000/api/speech?path=" + pathTree;
+        this.audioSrc = audioSrc;
       }
     },
     onClickSentenceWordHandler: function(startTime) {
+      console.log(startTime);
       this.$refs.audio.currentTime = startTime;
+      this.$refs.audio.play();
     }
   }
 };
