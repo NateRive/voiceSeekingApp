@@ -1,20 +1,13 @@
 import axios from "axios";
-const DEVELOP = "development"
-console.log(process.env.NODE_ENV)
+import { BASE_URL } from "../util/const";
+console.log(BASE_URL)
 
-if (process.env.NODE_ENV == DEVELOP) {
-    console.log("a")
-    var domain = "http://localhost:3000"
-} else if (process.env.NODE_ENV == PREVIEW) {
-    var domain = "http://54.80.183.167:3000"
-}
-const baseURL = `${domain}/api`
-const axiosObject = axios.create({
-    baseURL
-})
+// const axiosObject = axios.create({
+//     BASE_URL
+// })
 
 export const axiosGet = async (path) => {
-    const res = await axiosObject.get(path)
+    const res = await axios.get(BASE_URL + path)
     if (res.status === 200) {
         return res.data
     } else {
@@ -24,7 +17,7 @@ export const axiosGet = async (path) => {
 
 export const axiosPost = async (path, payload) => {
     try {
-        const res = await axiosObject.post(path, payload)
+        const res = await axios.post(BASE_URL + path, payload)
         console.log(res)
         if (res.status === 200) {
             return res.data

@@ -21,6 +21,7 @@
 import treeComponent from "../components/treeComponent";
 import sentenceComponent from "../components/sentenceComponent";
 import modelFactory from "../model/index";
+import { BASE_URL } from "../util/const";
 const locationModel = modelFactory.get("location");
 const speechModel = modelFactory.get("speech");
 const wordModel = modelFactory.get("word");
@@ -53,9 +54,10 @@ export default {
         wordModel.get(event.row.id).then(data => {
           this.sentenceData = data;
         });
-        event.idTree.push(event.row.name);
-        const pathTree = event.idTree.join("/");
-        const audioSrc = "http://localhost:3000/api/speech?path=" + pathTree;
+        let idTreeCopy = event.idTree.concat();
+        idTreeCopy.push(event.row.name);
+        const pathTree = idTreeCopy.join("/");
+        const audioSrc = `${BASE_URL}/speech?path=${pathTree}`;
         this.audioSrc = audioSrc;
       }
     },
