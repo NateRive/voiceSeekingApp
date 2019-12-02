@@ -5,6 +5,7 @@ const cors = require('cors')
 const speech = require('./router/speech')
 const location = require('./router/location')
 const word = require('./router/word')
+const file = require('./router/file');
 // const clientRequest = require('./router/clientRequest')
 
 var server = app.listen(3000, function () {
@@ -16,6 +17,7 @@ app.use(express.static(__dirname + '/public'));
 app.use('/api/speech', speech);
 app.use('/api/location', location)
 app.use('/api/word', word)
+app.use('/api/file', file)
 console.log("iiiiiiiiiiiiiiiiiiiii", process.env.NODE_ENV)
 // login画面のページを返すAPI (静的ファイルとして処理)
 

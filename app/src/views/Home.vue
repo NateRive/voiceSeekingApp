@@ -11,7 +11,6 @@
       </div>
     </div>
     <div class="bottom-area">
-      <!--  -->
       <audio id="audio" :src="audioSrc" preload="auto" ref="audio" controls autoplay></audio>
     </div>
   </div>
@@ -25,6 +24,7 @@ import { BASE_URL } from "../util/const";
 const locationModel = modelFactory.get("location");
 const speechModel = modelFactory.get("speech");
 const wordModel = modelFactory.get("word");
+const fileModel = modelFactory.get("file");
 export default {
   components: {
     treeComponent,
@@ -36,6 +36,7 @@ export default {
       fileName: "",
       currentTree: [""],
       sentenceData: [],
+      sentenceDataLength: -1,
       inputValue: "",
       isShow: false,
       audioSrc: "",
@@ -45,20 +46,28 @@ export default {
   props: {},
   async created() {
     this.shownData = await locationModel.get();
-    var vm = this;
   },
   methods: {
     onClickItemHandler: async function(event) {
       this.fileName = event.row.name;
       if (event.row.isfile) {
         wordModel.get(event.row.id).then(data => {
-          this.sentenceData = data;
+          console.log(data);
+          this.$set(this, "sentenceData", data);
+          // this.sentenceData = data;
         });
+
         let idTreeCopy = event.idTree.concat();
         idTreeCopy.push(event.row.name);
         const pathTree = idTreeCopy.join("/");
-        const audioSrc = `${BASE_URL}/speech?path=${pathTree}`;
-        this.audioSrc = audioSrc;
+        fileModel
+          .get(pathTree)
+          .then(url => {
+            this.audioSrc = url;
+          })
+          .catch(err => {
+            console.log("署名つきURLの取得に失敗しました。");
+          });
       }
     },
     onClickSentenceWordHandler: function(startTime) {

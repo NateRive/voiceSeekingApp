@@ -7,6 +7,7 @@ const PREVIEW = "preview"
 
 // var fs = require('fs')
 
+// 指定したファイルの音声バイナリを取得する処理
 router.post('/', async (req, res, next) => {
     try {
         // console.log(req.query.path)
@@ -20,6 +21,7 @@ router.post('/', async (req, res, next) => {
     }
 })
 
+// 指定したファイルの音声バイナリを取得する処理
 router.get('/', async (req, res, next) => {
     try {
         // console.log(req.query.path)
@@ -33,6 +35,7 @@ router.get('/', async (req, res, next) => {
     }
 })
 
+// ファイルをアップロードし、文字起こしをする処理
 if (process.env.NODE_ENV != PREVIEW) {
     router.get('/convert/:bucket_name/:file_name', async (req, res, next) => {
         // s3からデータを取る処理

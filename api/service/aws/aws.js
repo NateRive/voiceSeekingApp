@@ -14,14 +14,19 @@ class awsObject {
     }
 
     async getDataFromS3(path, range) {
-        const number = range.match(/\d+/)[0]
-        const endtime = Number(number) + 1000000
-        range = range + endtime
         var params = {
             Bucket: s3_bucket_name,
             Key: path,
-            Range: range
         }
+
+        if (range) {
+            const number = range.match(/\d+/)[0]
+            const endtime = Number(number) + 1000000
+            range = range + endtime
+            params.Range = range
+        }
+
+
         return new Promise((resolve, reject) => {
             console.time("aaa")
             s3.getObject(params, (err, data) => {

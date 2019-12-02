@@ -6,9 +6,11 @@ console.log(BASE_URL)
 //     BASE_URL
 // })
 
-export const axiosGet = async (path) => {
-    const res = await axios.get(BASE_URL + path)
+export const axiosGet = async (path, queryObj = null) => {
+    const params = { params: queryObj }
+    const res = await axios.get(BASE_URL + path, params)
     if (res.status === 200) {
+        console.log(res)
         return res.data
     } else {
         console.log("error happend in axios", res)
