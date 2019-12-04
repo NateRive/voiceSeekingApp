@@ -3,9 +3,10 @@ var app = express();
 const cors = require('cors')
 
 const speech = require('./router/speech')
-const location = require('./router/location')
+const page = require('./router/page')
 const word = require('./router/word')
 const file = require('./router/file');
+const workspace = require('./router/workspace');
 // const clientRequest = require('./router/clientRequest')
 
 var server = app.listen(3000, function () {
@@ -15,9 +16,10 @@ app.use(express.json())
 app.use(cors())
 app.use(express.static(__dirname + '/public'));
 app.use('/api/speech', speech);
-app.use('/api/location', location)
+app.use('/api/page', page)
 app.use('/api/word', word)
 app.use('/api/file', file)
+app.use('/api/workspaces', workspace)
 console.log("iiiiiiiiiiiiiiiiiiiii", process.env.NODE_ENV)
 // login画面のページを返すAPI (静的ファイルとして処理)
 

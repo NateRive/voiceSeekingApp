@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-var locationService = require('../service/location')
+var pageService = require('../service/page')
 
 router.get('/', async (req, res, next) => {
-    var locations = await new locationService().getLocations()
-    res.json(locations)
+    var pages = await new pageService().getPages()
+    res.json(pages)
 })
 
 

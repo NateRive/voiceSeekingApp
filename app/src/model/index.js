@@ -1,13 +1,15 @@
-import locationModel from "./locationModel";
+import pageModel from "./pageModel";
 import wordModel from "./wordModel";
 import speechModel from "./speechModel";
 import fileModel from "./fileModel";
+import workspaceModel from "./workspaceModel";
 
 const models = {
-    location: locationModel,
+    page: pageModel,
     word: wordModel,
     speech: speechModel,
-    file: fileModel
+    file: fileModel,
+    workspace: workspaceModel
 }
 
 export default {

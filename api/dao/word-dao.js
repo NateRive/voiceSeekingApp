@@ -2,34 +2,29 @@
 const Sequelize = require('sequelize');
 const sequelize = require("./database")
 const mapper = require('../models/word')(sequelize, Sequelize)
+const Dao = require("./dao");
 
-class WordDao {
+class WordDao extends Dao {
     constructor() {
+        super()
     }
 
     get mapper() {
         return mapper;
     }
 
-    async bulkCeate(words) {
-        sequelize.transaction(async (transaction) => {
-            for (const word of words) {
-                this.mapper.create(word, transaction)
-            }
-        })
+    async createBulkWords(words, transaction) {
+        // sequelize.transaction(async (transaction) => {
+        await this.bulkCeate(words, transaction)
+        // })
     }
 
     /**
      * @param {Number} fileId 
      * @return {Array} [{id: ?? ...}, {}]
      */
-    async getDatasByFileId(fileId) {
-        return await this.mapper.findAll({
-            raw: true,
-            where: {
-                location_id: fileId
-            }
-        })
+    async getDatasByFileId(pageId) {
+        return await this.findAll({ page_id: pageId })
     }
 }
 

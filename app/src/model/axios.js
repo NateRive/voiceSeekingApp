@@ -1,6 +1,5 @@
 import axios from "axios";
 import { BASE_URL } from "../util/const";
-console.log(BASE_URL)
 
 // const axiosObject = axios.create({
 //     BASE_URL
@@ -8,26 +7,23 @@ console.log(BASE_URL)
 
 export const axiosGet = async (path, queryObj = null) => {
     const params = { params: queryObj }
-    const res = await axios.get(BASE_URL + path, params)
-    if (res.status === 200) {
-        console.log(res)
+    try {
+        console.log("iii", path)
+        var res = await axios.get(BASE_URL + path, params)
         return res.data
-    } else {
-        console.log("error happend in axios", res)
+    } catch (err) {
+        console.log("error happend in axios", err)
+        throw Error(err)
+        // err.response
     }
 }
 
 export const axiosPost = async (path, payload) => {
     try {
-        const res = await axios.post(BASE_URL + path, payload)
-        console.log(res)
-        if (res.status === 200) {
-            return res.data
-        } else {
-            console.log("error happend in axios", res)
-        }
+        var res = await axios.post(BASE_URL + path, payload)
+        return res.data;
     } catch (err) {
-        console.log("error happend in axios", err.response.data)
-    }
+        console.log("error happend in axios", err.response)
 
+    }
 }

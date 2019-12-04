@@ -26,7 +26,7 @@ class GCP {
   }
 
 
-  async convertSpeechToText(locationResult, speakerCount) {
+  async convertSpeechToText(pageResult, speakerCount) {
     const audio = {
       uri: "gs://audio-demo/1/sample.flac"
     };
@@ -60,14 +60,14 @@ class GCP {
         //   // transcription.push(result.alternatives[0].transcript)
         //   // console.log(`Transcription: ${result.alternatives[0].transcript}`);
         //   const res = this.formatSeparatedWordData(
-        //     result.alternatives[0].words, locationResult
+        //     result.alternatives[0].words, pageResult
         //   );
         //   transcription = transcription.concat(res)
         // });
 
         var wordInfo = response.results[response.results.length - 1].alternatives[0].words
         const transcription = this._formatSeparatedWordData(
-          wordInfo, locationResult
+          wordInfo, pageResult
         );
 
         const json = JSON.stringify({
@@ -81,7 +81,7 @@ class GCP {
       });
   }
 
-  _formatSeparatedWordData(words, locationResult) {
+  _formatSeparatedWordData(words, pageResult) {
     let transcription = [];
     words.forEach(wordInfo => {
       // NOTE: If you have a time offset exceeding 2^32 seconds, use the
@@ -107,7 +107,7 @@ class GCP {
         word: formattdWord,
         speaker_tag: speakerTag,
         starttime: startSecs,
-        location_id: locationResult.id
+        page_id: pageResult.id
       });
     });
     return transcription;

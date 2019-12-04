@@ -1,5 +1,8 @@
 <template>
   <div class="page">
+    <div @click.capture.prevent.stop="$router.go(-1)">
+      <a href>戻る</a>
+    </div>
     <div class="top-area">
       <div class="drilldownList">
         <div class="drilldownList-column">
@@ -21,7 +24,7 @@ import treeComponent from "../components/treeComponent";
 import sentenceComponent from "../components/sentenceComponent";
 import modelFactory from "../model/index";
 import { BASE_URL } from "../util/const";
-const locationModel = modelFactory.get("location");
+const workspaceModel = modelFactory.get("workspace");
 const speechModel = modelFactory.get("speech");
 const wordModel = modelFactory.get("word");
 const fileModel = modelFactory.get("file");
@@ -45,7 +48,8 @@ export default {
   },
   props: {},
   async created() {
-    this.shownData = await locationModel.get();
+    console.log(this.$route.params.id);
+    this.shownData = await workspaceModel.getById(this.$route.params.id);
   },
   methods: {
     onClickItemHandler: async function(event) {
