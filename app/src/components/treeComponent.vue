@@ -1,18 +1,25 @@
 <template>
   <ul class="tree">
-    <li class="tree-item" v-for="(row, index) in datas" :key="`${row.name}` + index">
+    <li class="tree-item" v-for="(page, index) in pageData" :key="`${page.name}` + index">
       <span
         class="tree-item__label"
         :style="{ paddingLeft: treeNest * 40 + 'px' }"
-        @click="$emit('click', {row: row, idTree: parentIdTree})"
+        @click="onClickItemHandler(page, index)"
       >
-        <span>{{ row.name }}</span>
-        <span v-if="row.isfile">(音声)</span>
+        <span>{{ page.name }}</span>
+        <span v-if="page.isfile">(音声)</span>
+        <HidingIcon
+          class="tree-item-icon"
+          type="add"
+          :isFloat="true"
+          style="right: 10px; top: 10px;"
+        />
       </span>
       <treeComponent
-        v-if="row.children"
-        :parentIdTree="computeCurrentParentIdTree(row.id)"
-        :datas="row.children"
+        v-if="page.showChild"
+        @pageDetailLoad="$emit('pageDetailLoad', $event)"
+        :parentIdTree="computeCurrentParentIdTree(page.id)"
+        :datas="page.children"
         :treeNest="treeNest + 1"
         @click="$emit('click', $event)"
       />
@@ -22,10 +29,14 @@
 
 <script>
 import treeComponent from "../components/treeComponent";
+import HidingIcon from "../UIParts/Lv1/HidingIcon";
+import modelFactory from "../model/index";
+const pageModel = modelFactory.get("page");
 
 export default {
   name: "treeComponent",
   components: {
+    HidingIcon,
     treeComponent
   },
   props: {
@@ -46,13 +57,35 @@ export default {
     }
   },
   data: function() {
-    return {};
+    return {
+      pageData: this.datas.concat()
+    };
   },
   methods: {
     computeCurrentParentIdTree: function(id) {
       let newArray = this.parentIdTree.concat();
       newArray.push(id);
       return newArray;
+    },
+    onClickItemHandler: async function(page, index) {
+      if (page.isfile) {
+        this.$emit("pageDetailLoad", { page: page, idTree: this.parentIdTree });
+      } else {
+        if (page.children && page.children.length) {
+          if (page.showChild) {
+            page.showChild = false;
+          } else {
+            page.showChild = true;
+          }
+        } else {
+          // 子供データのREST APIでの取得
+          const res = await pageModel.getByParentId(page.id);
+          const newPage = { ...this.pageData[index] };
+          newPage.children = res;
+          newPage.showChild = true;
+          this.$set(this.pageData, index, newPage);
+        }
+      }
     }
   },
   computed: {}
@@ -72,9 +105,13 @@ export default {
     line-height: 50px;
     width: 100%;
     border-bottom: 1px solid #e5e5e5;
+    position: relative;
     &:hover {
-      background-color: rgba(204, 236, 255, 0.3);
+      background-color: $hover-color;
       cursor: pointer;
+      .tree-item-icon {
+        display: inline-flex;
+      }
     }
   }
 }

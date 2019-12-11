@@ -1,10 +1,18 @@
 const express = require('express');
 const router = express.Router();
-var pageService = require('../service/page')
+const AudioService = require("../service/audio");
+const audioService = new AudioService()
+const PageService = require('../service/page')
+const pageService = new PageService()
 
-router.get('/', async (req, res, next) => {
-    var pages = await new pageService().getPages()
+router.get('/parent/:id', async (req, res, next) => {
+    var pages = await pageService.getPagesByParentId(req.params.id)
     res.json(pages)
+})
+
+router.get('/:id', async (req, res, next) => {
+    var audios = await audioService.getAudiosByPageId(req.params.id)
+    res.json(audios)
 })
 
 

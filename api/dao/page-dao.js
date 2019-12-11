@@ -1,7 +1,7 @@
 // const Dao = require('./dao')
 const Sequelize = require('sequelize');
 const sequelize = require("./database")
-const mapper = require('../models/page')(sequelize, Sequelize)
+const mapper = require('../models/page')
 const Dao = require("./dao");
 
 class PageDao extends Dao {
@@ -23,27 +23,33 @@ class PageDao extends Dao {
         return await this.create(data, transaction)
     }
 
+    async getPagesByParentId(parentId) {
+        return await this.findAll({
+            where: { parent_id: parentId }
+        })
+    }
+
 
     /**
      * @return {Object}
      */
-    async getPageTree(workspaceId) {
-        var datas = await this.findAll({ parent_id: null, workspace_id: workspaceId })
-        await this.getDataByParentId(datas)
-        return datas
-    }
+    // async getPageTree(workspaceId) {
+    //     var datas = await this.findAll({ parent_id: null, workspace_id: workspaceId })
+    //     await this.getDataByParentId(datas)
+    //     return datas
+    // }
 
 
-    async getDataByParentId(array) {
-        var instance = this
-        await Promise.all(array.map(async (row) => {
-            const children = await instance.findAll({ parent_id: row.id })
-            if (children.length) {
-                row.children = children
-                await instance.getDataByParentId(row.children)
-            }
-        }))
-    }
+    // async getDataByParentId(array) {
+    //     var instance = this
+    //     await Promise.all(array.map(async (row) => {
+    //         const children = await instance.findAll({ parent_id: row.id })
+    //         if (children.length) {
+    //             row.children = children
+    //             await instance.getDataByParentId(row.children)
+    //         }
+    //     }))
+    // }
 }
 
 module.exports = PageDao

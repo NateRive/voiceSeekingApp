@@ -1,7 +1,3 @@
-// const Dao = require('./dao')
-const Sequelize = require('sequelize');
-const sequelize = require("./database")
-const mapper = require('../models/word')(sequelize, Sequelize)
 
 class Dao {
   constructor() {
@@ -22,9 +18,10 @@ class Dao {
   }
 
   async findAll(condition) {
-    return await this.mapper.findAll({
-      raw: true,
-      where: condition
+    return await this.mapper.findAll(
+      condition
+    ).map(el => {
+      return el.get({ plain: true })
     })
   }
 }

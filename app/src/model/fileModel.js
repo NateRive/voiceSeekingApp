@@ -1,5 +1,5 @@
 import { axiosGet } from "./axios";
-const resources = "/file"
+const resources = "/files"
 
 export default {
   async get(path) {

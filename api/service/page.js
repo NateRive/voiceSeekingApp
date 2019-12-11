@@ -6,8 +6,8 @@ class Speech {
     constructor(bucketName, fileName) {
     }
 
-    async getPages(workspaceId) {
-        return await pageDao.getPageTree(workspaceId)
+    async getPagesByParentId(parentId) {
+        return await pageDao.getPagesByParentId(parentId)
     }
 
 }

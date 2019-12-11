@@ -1,9 +1,14 @@
 import { axiosGet } from "./axios";
-const resources = "/page"
+const resources = "/pages"
 
 export default {
-    async get(workspaceId) {
-        const res = await axiosGet(`${resources}/${workspaceId}`)
+    async getByParentId(parentId) {
+        const res = await axiosGet(`${resources}/parent/${parentId}`)
+        return res;
+    },
+
+    async getPageDetail(pageId) {
+        const res = await axiosGet(`${resources}/${pageId}`)
         return res;
     }
 }

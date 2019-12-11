@@ -1,12 +1,12 @@
-'use strict';
-module.exports = (sequelize, DataTypes) => {
-  const workspace = sequelize.define('workspace', {
-    name: DataTypes.STRING,
-  }, {
-    underscored: true,
-  });
-  workspace.associate = function (models) {
-    // associations can be defined here
-  };
-  return workspace;
+const Sequelize = require('sequelize');
+const db = require("../dao/database");
+
+const Workspace = db.define('workspace', {
+  name: Sequelize.STRING,
+}, {
+  underscored: true,
+});
+Workspace.associate = function (models) {
+  // associations can be defined here
 };
+module.exports = Workspace

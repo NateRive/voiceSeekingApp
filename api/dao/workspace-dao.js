@@ -1,7 +1,4 @@
-// const Dao = require('./dao')
-const Sequelize = require('sequelize');
-const sequelize = require("./database")
-const mapper = require('../models/workspace')(sequelize, Sequelize)
+const mapper = require('../models/workspace')
 const Dao = require("./dao");
 
 class WordDao extends Dao {

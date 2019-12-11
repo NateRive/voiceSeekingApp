@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 var workspaceService = require('../service/workspace')
-var pageService = require('../service/page')
+var GroupService = require('../service/group')
+const groupService = new GroupService()
 
 router.get('/', async (req, res, next) => {
   var workspaceList = await new workspaceService().getWorkspaceList()
@@ -9,7 +10,7 @@ router.get('/', async (req, res, next) => {
 })
 
 router.get('/:id', async (req, res, next) => {
-  var pages = await new pageService().getPages(req.params.id)
+  var pages = await groupService.getGroups(req.params.id)
   res.json(pages)
 })
 

@@ -1,17 +1,26 @@
-'use strict';
-module.exports = (sequelize, DataTypes) => {
-  const page = sequelize.define('page', {
-    name: DataTypes.STRING,
-    parent_id: DataTypes.INTEGER,
-    isfile: DataTypes.BOOLEAN,
-    workspace_id: DataTypes.INTEGER
-  }, {
-    underscored: true,
-  });
-  page.associate = function (models) {
-    // associations can be defined here
-    page.hasMany(models.word);
-    page.belongsTo(models.workspace)
-  };
-  return page;
-};
+const Sequelize = require('sequelize');
+const db = require("../dao/database");
+const Group = require("./group");
+
+const Page = db.define('page', {
+  name: Sequelize.STRING,
+  parent_id: Sequelize.INTEGER,
+  isfile: Sequelize.BOOLEAN,
+  group_id: Sequelize.INTEGER,
+  created_at: {
+    allowNull: false,
+    type: Sequelize.DATE
+  },
+  updated_at: {
+    allowNull: false,
+    type: Sequelize.DATE
+  }
+}, {
+  underscored: true,
+});
+Group.hasMany(Page, {
+  as: "page",
+  foreignKey: "group_id",
+  sourceKey: "id"
+})
+module.exports = Page
