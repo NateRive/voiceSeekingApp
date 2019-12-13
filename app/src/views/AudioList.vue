@@ -18,6 +18,14 @@ export default {
   async created() {
     console.log(this.$route.params);
     this.audioList = await pageModel.getPageDetail(this.$route.params.pageId);
+  },
+  updated() {
+    console.log("updated");
+  },
+  watch: {
+    "$route.params.pageId": async function(to, from) {
+      this.audioList = await pageModel.getPageDetail(to);
+    }
   }
 };
 </script>

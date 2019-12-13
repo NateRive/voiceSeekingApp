@@ -19,7 +19,7 @@
       </div>
       <div class="content-area">
         <router-view></router-view>
-        <div v-for="(audio) in audioList" :key="audio.id"></div>
+        <!-- <div v-for="(audio) in audioList" :key="audio.id"></div> -->
         <!-- <sentenceComponent :sentenceData="sentenceData" @click="onClickSentenceWordHandler" /> -->
       </div>
     </div>
@@ -69,6 +69,7 @@ export default {
       // pageの作成処理
     },
     onPageDetailLoad: function(event) {
+      console.log(event.page.id);
       this.$router.push(
         {
           name: "audioList",

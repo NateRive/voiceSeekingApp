@@ -7,7 +7,7 @@
         @click="onClickItemHandler(page, index)"
       >
         <span>{{ page.name }}</span>
-        <span v-if="page.isfile">(音声)</span>
+        <span v-if="page.isfile">(page)</span>
         <HidingIcon
           class="tree-item-icon"
           type="add"
