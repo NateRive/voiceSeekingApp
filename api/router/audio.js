@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const WordService = require("../service/word");
+const wordService = new WordService()
 
-router.get('pages/parent/:id', async (req, res, next) => {
-    var pages = await pageService.getPagesByParentId(req.params.id)
-    res.json(pages)
+router.get('/:audioId', async (req, res, next) => {
+    var audios = await wordService.getWordsByAudioId(req.params.audioId)
+    res.json(audios)
 })
 
 

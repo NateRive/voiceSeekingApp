@@ -1,7 +1,10 @@
 import * as types from './types';
 
 export default {
-    [types.MUTATE_UPDATE_VALUE]: (state, payload) => {
-        state.value = payload;
+    [types.MUTATE_WORKSPACE]: (state, payload) => {
+        state.workspace = payload;
+    },
+    [types.MUTATE_GROUP]: (state, payload) => {
+        state.group = payload
     }
 };

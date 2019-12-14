@@ -1,12 +1,12 @@
 // Getters
-export const DOUBLE_COUNTER = 'counter/DOUBLE_COUNTER';
-export const CLICK_COUNTER = 'counter/CLICK_COUNTER';
-export const VALUE = 'shared/VALUE';
+export const GET_AUDIO_PAGE_TREE = 'audio/GET_PAGE_TREE';
+export const GET_WORKSPACE = 'workspace/GET_WORKSPACE';
+export const GET_GROUP = 'group/GET_GROUP';
 
 // Mutations
-export const MUTATE_INCREMENT_COUNTER = 'counter/MUTATE_INCREMENT_COUNTER';
-export const MUTATE_DECREMENT_COUNTER = 'counter/MUTATE_DECREMENT_COUNTER';
-export const MUTATE_UPDATE_VALUE = 'shared/MUTATE_UPDATE_VALUE';
+export const MUTATE_AUDIO_PAGE_TREE = 'audio/MUTATE_PAGE_TREE';
+export const MUTATE_WORKSPACE = 'workspace/MUTATE_WORKSPACE';
+export const MUTATE_GROUP = 'group/MUTATE_GROUP';
 
 // Actions
 export const COUNTER_INCREMENT = 'counter/COUNTER_INCREMENT';

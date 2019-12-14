@@ -10,7 +10,8 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     state: {
-        value: 0
+        workspace: {},
+        group: {}
     },
     getters,
     mutations,

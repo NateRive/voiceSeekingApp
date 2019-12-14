@@ -2,8 +2,8 @@ import { axiosGet } from "./axios";
 const resources = "/audios"
 
 export default {
-    async get(pageId) {
-        const res = await axiosGet(`pages/${pageId}${resources}`)
+    async getByAudioId(audioId) {
+        const res = await axiosGet(`${resources}/${audioId}`)
         return res;
     }
 }

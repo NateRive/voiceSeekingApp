@@ -1,18 +1,18 @@
 import * as types from '../types';
 
 const state = {
-    counter: 0
+    pageTree: []
 };
 
 const getters = {
-    [types.DOUBLE_COUNTER]: state => {
-        return state.counter * 2;
+    [types.GET_AUDIO_PAGE_TREE]: (state) => {
+        return state.pageTree
     }
 };
 
 const mutations = {
-    [types.MUTATE_INCREMENT_COUNTER]: (state, payload) => {
-        state.counter += payload;
+    [types.MUTATE_AUDIO_PAGE_TREE]: (state, payload) => {
+        state.pageTree = payload;
     }
 };
 

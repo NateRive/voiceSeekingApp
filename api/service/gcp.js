@@ -1,10 +1,10 @@
 // Google Cloud Storage Bucket Name
-const BUCKET_NAME = 'audio-demo';
-
+// const BUCKET_NAME = 'audio-demo';
+const consts = require("../util/const");
 require("dotenv").config();
 const { Storage } = require('@google-cloud/storage');
 const storage = new Storage();
-const myBucket = storage.bucket(BUCKET_NAME);
+const myBucket = storage.bucket(consts.AUDIO_BUCKET_NAME);
 const speech = require("@google-cloud/speech").v1p1beta1;
 const client = new speech.SpeechClient();
 var fs = require("fs-extra");

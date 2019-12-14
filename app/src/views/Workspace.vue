@@ -6,12 +6,14 @@
     <div class="top-area">
       <div class="sidebar">
         <div class="sidebar-block" v-for="(block) in shownData" :key="block.id">
-          <div class="sidebar-block__name">{{ block.name }}</div>
+          <HidingIcon type="add" :isFloat="true" right="10px" top="10px">
+            <div class="sidebar-block__name" @click="onClickPageAddHandler(1)">{{ block.name }}</div>
+          </HidingIcon>
           <div class="sidebar-column">
             <treeComponent
               v-if="block.page && block.page.length"
               :datas="block.page"
-              @pageDetailLoad="onPageDetailLoad"
+              @pageDetailLoad="onPageDetailLoad($event, block)"
               :treeNest="treeNest"
             />
           </div>
@@ -23,27 +25,26 @@
         <!-- <sentenceComponent :sentenceData="sentenceData" @click="onClickSentenceWordHandler" /> -->
       </div>
     </div>
-    <div class="bottom-area">
-      <audio id="audio" :src="audioSrc" preload="auto" ref="audio" controls autoplay></audio>
-    </div>
+    <div class="bottom-area"></div>
   </div>
 </template>
 
 <script>
-// import HidingIcon from "../UIParts/Lv1/HidingIcon";
+import { mapMutations } from "vuex";
+import * as types from "../store/types";
+import HidingIcon from "../UIParts/Lv1/HidingIcon";
 import treeComponent from "../components/treeComponent";
-// import sentenceComponent from "../components/sentenceComponent";
 import modelFactory from "../model/index";
 import { BASE_URL } from "../util/const";
 const workspaceModel = modelFactory.get("workspace");
 const speechModel = modelFactory.get("speech");
 const wordModel = modelFactory.get("word");
 const fileModel = modelFactory.get("file");
+const pageModel = modelFactory.get("page");
 export default {
   components: {
-    // HidingIcon,
+    HidingIcon,
     treeComponent
-    // sentenceComponent
   },
   data: function() {
     return {
@@ -55,54 +56,37 @@ export default {
       sentenceDataLength: -1,
       inputValue: "",
       isShow: false,
-      audioSrc: "",
       shownData: [{}, {}]
     };
   },
   props: {},
   async created() {
-    console.log(this.$route.params.id);
-    this.shownData = await workspaceModel.getById(this.$route.params.id);
+    this.shownData = await workspaceModel.getById(
+      this.$route.params.workspaceId
+    );
   },
   methods: {
-    onClickPrivateHandler: function() {
-      // pageの作成処理
-    },
-    onPageDetailLoad: function(event) {
-      console.log(event.page.id);
+    onClickPageAddHandler: function(noParent) {},
+    onPageDetailLoad: function(event, group) {
       this.$router.push(
         {
           name: "audioList",
-          params: { pageId: event.page.id }
+          params: {
+            workspaceId: this.$route.params.workspaceId,
+            pageId: event.page.id
+          }
         },
         () => {},
         () => {}
       );
-      // this.fileName = event.row.name;
-      // if (event.row.isfile) {
-      //   wordModel.get(event.row.id).then(data => {
-      //     console.log(data);
-      //     this.$set(this, "sentenceData", data);
-      //     // this.sentenceData = data;
-      //   });
-      //   let idTreeCopy = event.idTree.concat();
-      //   idTreeCopy.push(event.row.name);
-      //   const pathTree = idTreeCopy.join("/");
-      //   fileModel
-      //     .get(pathTree)
-      //     .then(url => {
-      //       this.audioSrc = url;
-      //     })
-      //     .catch(err => {
-      //       console.log("署名つきURLの取得に失敗しました。");
-      //     });
-      // }
+      let idTreeCopy = event.idTree.concat();
+      this.setGroup(group);
+      this.fixPageTree(idTreeCopy);
     },
-    onClickSentenceWordHandler: function(startTime) {
-      console.log(startTime);
-      this.$refs.audio.currentTime = startTime;
-      this.$refs.audio.play();
-    }
+    ...mapMutations({
+      fixPageTree: types.MUTATE_AUDIO_PAGE_TREE,
+      setGroup: types.MUTATE_GROUP
+    })
   }
 };
 </script>
@@ -125,6 +109,11 @@ export default {
   margin-top: 50px;
   &__name {
     font-weight: bold;
+    line-height: 50px;
+    &:hover {
+      background-color: $hover-color;
+      cursor: pointer;
+    }
   }
 }
 // .sidebar-private {

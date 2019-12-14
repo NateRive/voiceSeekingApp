@@ -17,11 +17,11 @@ class WordDao extends Dao {
     }
 
     /**
-     * @param {Number} fileId 
+     * @param {Number} audioId 
      * @return {Array} [{id: ?? ...}, {}]
      */
-    async getDatasByFileId(pageId) {
-        return await this.findAll({ page_id: pageId })
+    async getWordsByAudioId(audioId) {
+        return await this.findAll({ where: { audio_id: audioId } })
     }
 }
 

@@ -3,20 +3,26 @@ import Router from 'vue-router'
 import Workspace from './views/Workspace'
 import WorkspaceList from './views/WorkspaceList';
 import AudioList from './views/AudioList';
+import AudioDetail from './views/AudioDetail';
 Vue.use(Router)
 
 export default new Router({
     mode: 'history',
     routes: [
         {
-            path: '/workspace/:id',
+            path: '/workspaces/:workspaceId',
             name: 'workspace',
             component: Workspace,
             children: [
                 {
                     name: 'audioList',
-                    path: 'page/:pageId',
+                    path: 'pages/:pageId',
                     component: AudioList
+                },
+                {
+                    name: 'audioDetail',
+                    path: 'audios/:audioId',
+                    component: AudioDetail
                 }
             ]
         },

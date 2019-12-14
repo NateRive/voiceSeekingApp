@@ -7,8 +7,10 @@ class AudioService {
     }
 
     async getAudiosByPageId(parentId) {
-        return await audioDao.getAudiosByPageId(parentId)
+        const res = await audioDao.getAudiosByPageId(parentId)
+        return res;
     }
+
 
 }
 module.exports = AudioService;

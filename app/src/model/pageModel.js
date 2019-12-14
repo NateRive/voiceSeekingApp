@@ -10,5 +10,9 @@ export default {
     async getPageDetail(pageId) {
         const res = await axiosGet(`${resources}/${pageId}`)
         return res;
+    },
+
+    async createPage(groupId, parentId) {
+
     }
 }

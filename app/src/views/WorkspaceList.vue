@@ -1,16 +1,25 @@
 <template>
-  <div class="workspace-list">
-    <div
-      class="workspace-list__item"
-      v-for="(workspace, index) in workspaceList"
-      :key="workspace + index"
-    >
-      <router-link :to="`/workspace/${workspace.id}`">{{ workspace.name }}</router-link>
+  <div>
+    <div class="workspace-list">
+      <div
+        class="workspace-list__item"
+        v-for="(workspace, index) in workspaceList"
+        :key="workspace + index"
+        @click="setWorkSpace(workspace)"
+      >
+        <router-link :to="`/workspaces/${workspace.id}`">{{ workspace.name }}</router-link>
+      </div>
+    </div>
+    <div class="button">
+      <button @click="toCreateWorkspaceHandler"></button>
     </div>
   </div>
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+import * as types from "../store/types";
+
 import modelFactory from "../model/index";
 const workspaceModel = modelFactory.get("workspace");
 export default {
@@ -22,6 +31,12 @@ export default {
   },
   async created() {
     this.workspaceList = await workspaceModel.get();
+  },
+  methods: {
+    ...mapMutations({
+      setWorkSpace: types.MUTATE_WORKSPACE
+    }),
+    toCreateWorkspaceHandler: function() {}
   }
 };
 </script>

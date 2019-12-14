@@ -3,12 +3,11 @@ const wordDao = new WordDao();
 var fs = require("fs-extra");
 
 class Word {
-  constructor(fileid) {
-    this.fileid = fileid
+  constructor() {
   }
 
-  async makeSentence() {
-    const res = await wordDao.getDatasByFileId(this.fileid)
+  async getWordsByAudioId(audioId) {
+    const res = await wordDao.getWordsByAudioId(audioId)
     return res;
   }
 

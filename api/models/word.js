@@ -1,7 +1,14 @@
 const Sequelize = require('sequelize');
 const db = require("../dao/database");
+const Audio = require("./audio");
 
 const Word = db.define('word', {
+  id: {
+    type: Sequelize.INTEGER.UNSIGNED,
+    primaryKey: true,
+    autoIncrement: true,
+    allowNull: false,
+  },
   word: Sequelize.STRING,
   starttime: Sequelize.STRING,
   audio_id: Sequelize.INTEGER,
@@ -9,8 +16,9 @@ const Word = db.define('word', {
 }, {
   underscored: true,
 });
-Word.associate = function (models) {
-  // associations can be defined here
-  Word.belongsTo(models.audio);
-};
+Audio.hasMany(Word, {
+  as: "word",
+  foreignKey: "audio_id",
+  sourcekey: "id"
+})
 module.exports = Word

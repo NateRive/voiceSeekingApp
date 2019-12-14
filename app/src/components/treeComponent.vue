@@ -1,20 +1,17 @@
 <template>
   <ul class="tree">
     <li class="tree-item" v-for="(page, index) in pageData" :key="`${page.name}` + index">
-      <span
-        class="tree-item__label"
-        :style="{ paddingLeft: treeNest * 40 + 'px' }"
-        @click="onClickItemHandler(page, index)"
-      >
-        <span>{{ page.name }}</span>
-        <span v-if="page.isfile">(page)</span>
-        <HidingIcon
-          class="tree-item-icon"
-          type="add"
-          :isFloat="true"
-          style="right: 10px; top: 10px;"
-        />
-      </span>
+      <HidingIcon type="add" :isFloat="true" top="10px" right="10px">
+        <span
+          class="tree-item__label"
+          :style="{ paddingLeft: treeNest * 40 + 'px' }"
+          @click="onClickItemHandler(page, index)"
+        >
+          <span>{{ page.name }}</span>
+          <span v-if="page.isfile">(page)</span>
+        </span>
+      </HidingIcon>
+
       <treeComponent
         v-if="page.showChild"
         @pageDetailLoad="$emit('pageDetailLoad', $event)"
@@ -71,6 +68,7 @@ export default {
       if (page.isfile) {
         this.$emit("pageDetailLoad", { page: page, idTree: this.parentIdTree });
       } else {
+        // 既に子供データを取得できている場合
         if (page.children && page.children.length) {
           if (page.showChild) {
             page.showChild = false;
@@ -78,7 +76,7 @@ export default {
             page.showChild = true;
           }
         } else {
-          // 子供データのREST APIでの取得
+          // 子供データがない場合、子供データをREST APIでの取得
           const res = await pageModel.getByParentId(page.id);
           const newPage = { ...this.pageData[index] };
           newPage.children = res;
@@ -105,7 +103,6 @@ export default {
     line-height: 50px;
     width: 100%;
     border-bottom: 1px solid #e5e5e5;
-    position: relative;
     &:hover {
       background-color: $hover-color;
       cursor: pointer;
