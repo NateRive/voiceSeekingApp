@@ -10,5 +10,9 @@ class Speech {
         return await pageDao.getPagesByParentId(parentId)
     }
 
+    async createPage(payload) {
+        return await pageDao.create(payload)
+    }
+
 }
 module.exports = Speech;

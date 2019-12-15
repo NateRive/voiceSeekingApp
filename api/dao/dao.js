@@ -12,8 +12,8 @@ class Dao {
     }))
   }
 
-  async create(item, transaction) {
-    const res = await this.mapper.create(item, transaction)
+  async create(payload, transaction) {
+    const res = await this.mapper.create(payload, transaction)
     return res.dataValues
   }
 

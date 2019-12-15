@@ -10,8 +10,8 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     state: {
-        workspace: {},
-        group: {}
+        workspace: {}, //現在のworkspace情報
+        group: {} //audio詳細が開かれているgroup情報
     },
     getters,
     mutations,

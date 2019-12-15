@@ -15,5 +15,10 @@ router.get('/:id', async (req, res, next) => {
     res.json(audios)
 })
 
+router.post('/', async (req, res, next) => {
+    var page = await pageService.createPage(req.body)
+    res.json(page)
+})
+
 
 module.exports = router

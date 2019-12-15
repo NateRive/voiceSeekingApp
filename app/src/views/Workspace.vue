@@ -5,15 +5,28 @@
     </div>
     <div class="top-area">
       <div class="sidebar">
-        <div class="sidebar-block" v-for="(block) in shownData" :key="block.id">
-          <HidingIcon type="add" :isFloat="true" right="10px" top="10px">
-            <div class="sidebar-block__name" @click="onClickPageAddHandler(1)">{{ block.name }}</div>
+        <div class="sidebar-group" v-for="(group, groupIndex) in shownData" :key="groupKey(group)">
+          <ModalComponent v-if="showRegisterModal === group.id" @close="showRegisterModal = -1">
+            <RegisterPageComponent
+              @submit="onSubmitCreatePageHandler($event, group.id, groupIndex)"
+            />
+          </ModalComponent>
+          <HidingIcon
+            @click="onClickPageAddHandler(group.id)"
+            type="add"
+            :isFloat="true"
+            right="10px"
+            top="10px"
+          >
+            <div class="sidebar-group__name">{{ group.name }}</div>
           </HidingIcon>
+
           <div class="sidebar-column">
             <treeComponent
-              v-if="block.page && block.page.length"
-              :datas="block.page"
-              @pageDetailLoad="onPageDetailLoad($event, block)"
+              v-if="group.page && group.page.length"
+              :groupId="group.id"
+              :datas="group.page"
+              @pageDetailLoad="onPageDetailLoad($event, group)"
               :treeNest="treeNest"
             />
           </div>
@@ -30,8 +43,11 @@
 </template>
 
 <script>
+import Vue from "vue";
 import { mapMutations } from "vuex";
 import * as types from "../store/types";
+import ModalComponent from "../UIParts/Lv1/Modal";
+import RegisterPageComponent from "../components/RegisterPageComponent";
 import HidingIcon from "../UIParts/Lv1/HidingIcon";
 import treeComponent from "../components/treeComponent";
 import modelFactory from "../model/index";
@@ -44,7 +60,9 @@ const pageModel = modelFactory.get("page");
 export default {
   components: {
     HidingIcon,
-    treeComponent
+    treeComponent,
+    ModalComponent,
+    RegisterPageComponent
   },
   data: function() {
     return {
@@ -55,7 +73,10 @@ export default {
       sentenceData: [],
       sentenceDataLength: -1,
       inputValue: "",
+      showRegisterModal: -1,
       isShow: false,
+      isFile: 0,
+      newName: "",
       shownData: [{}, {}]
     };
   },
@@ -65,8 +86,33 @@ export default {
       this.$route.params.workspaceId
     );
   },
+  updated() {
+    console.log("workspace updated");
+  },
   methods: {
-    onClickPageAddHandler: function(noParent) {},
+    groupKey: function(group) {
+      if (group.page) {
+        return group.id + group.name + group.page.length;
+      } else {
+        group.id + group.name;
+      }
+    },
+    onSubmitCreatePageHandler: async function(event, groupId, groupIndex) {
+      const payload = {
+        isFile: event.isfile,
+        name: event.name,
+        group_id: groupId,
+        parent_id: null
+      };
+      const res = await pageModel.createPage(payload);
+      console.log("res", res);
+      let temp = JSON.parse(JSON.stringify(this.shownData));
+      temp[groupIndex].page.unshift(res);
+      this.shownData = temp;
+    },
+    onClickPageAddHandler: function(groupId) {
+      this.showRegisterModal = groupId;
+    },
     onPageDetailLoad: function(event, group) {
       this.$router.push(
         {
@@ -105,7 +151,7 @@ export default {
   width: 300px;
   margin-right: 40px;
 }
-.sidebar-block {
+.sidebar-group {
   margin-top: 50px;
   &__name {
     font-weight: bold;

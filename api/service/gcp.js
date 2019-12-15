@@ -14,6 +14,8 @@ class GCP {
   constructor() {
   }
 
+
+  // クラウドストレージサービス
   async getSignedURL(path) {
     const file = myBucket.file(path)
     const urls = await file.getSignedUrl({
@@ -25,7 +27,46 @@ class GCP {
     return urls[0]
   }
 
+  async uploadFile(path) {
+    // const bucketName = 'Name of a bucket, e.g. my-bucket';
+    // const filename = path
+    // await storage.bucket(consts.AUDIO_BUCKET_NAME).upload(filename, {
+    //   gzip: true,
+    // });
+    if (!req.file) {
+      return next();
+    }
 
+    const gcsname = Date.now() + req.file.originalname;
+    const file = bucket.file(gcsname);
+
+    const stream = file.createWriteStream({
+      metadata: {
+        contentType: req.file.mimetype
+      },
+      resumable: false
+    });
+
+    stream.on('error', (err) => {
+      req.file.cloudStorageError = err;
+      next(err);
+    });
+
+    stream.on('finish', () => {
+      req.file.cloudStorageObject = gcsname;
+      file.makePublic().then(() => {
+        req.file.cloudStoragePublicUrl = getPublicUrl(gcsname);
+        next();
+      });
+    });
+
+    stream.end(req.file.buffer);
+  }
+
+
+
+
+  // Speech To Text API
   async convertSpeechToText(pageResult, speakerCount) {
     const audio = {
       uri: "gs://audio-demo/1/sample.flac"

@@ -5,6 +5,9 @@
         :to="`/workspaces/${$route.params.workspaceId}/audios/${audio.id}?audioName=${audio.name}`"
       >{{ audio.name }}</router-link>
     </div>
+    <div class="audio-upload">
+      <input type="file" ref="audio" @change="onChangeAudioInputHandler" />
+    </div>
   </div>
 </template>
 
@@ -22,12 +25,14 @@ export default {
   },
   async created() {
     this.audioList = await pageModel.getPageDetail(this.$route.params.pageId);
+    const audio = this.$refs.audio;
   },
   updated() {},
   methods: {
     onClickAudioItemHandler: async function(audio) {
       await audioModel.getByAudioId();
-    }
+    },
+    onChangeAudioInputHandler: function(file) {}
   },
   watch: {
     "$route.params.pageId": async function(to, from) {

@@ -1,4 +1,4 @@
-import { axiosGet } from "./axios";
+import { axiosGet, axiosPost } from "./axios";
 const resources = "/pages"
 
 export default {
@@ -12,7 +12,8 @@ export default {
         return res;
     },
 
-    async createPage(groupId, parentId) {
-
+    async createPage(payload) {
+        const res = await axiosPost(`${resources}`, payload)
+        return res;
     }
 }

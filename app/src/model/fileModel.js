@@ -1,4 +1,4 @@
-import { axiosGet } from "./axios";
+import { axiosGet, axiosPost } from "./axios";
 const resources = "/files"
 
 export default {
@@ -6,5 +6,10 @@ export default {
     const query = { path: path }
     const res = await axiosGet(resources, query)
     return res;
+  },
+
+  async postAudio() {
+    const res = await axiosPost(`${resources}`, payload)
+    return res
   }
 }

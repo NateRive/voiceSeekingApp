@@ -1,7 +1,18 @@
 <template>
   <ul class="tree">
-    <li class="tree-item" v-for="(page, index) in pageData" :key="`${page.name}` + index">
-      <HidingIcon type="add" :isFloat="true" top="10px" right="10px">
+    <li class="tree-item" v-for="(page, index) in pageData" :key="pageKey(page)">
+      <ModalComponent v-if="showRegisterModal === page.id" @close="showRegisterModal = -1">
+        <RegisterPageComponent
+          @submit="onSubmitCreatePageHandler($event, groupId, page.id, index)"
+        />
+      </ModalComponent>
+      <HidingIcon
+        @click="onClickPageAddHandler(page.id)"
+        type="add"
+        :isFloat="true"
+        top="10px"
+        right="10px"
+      >
         <span
           class="tree-item__label"
           :style="{ paddingLeft: treeNest * 40 + 'px' }"
@@ -17,6 +28,7 @@
         @pageDetailLoad="$emit('pageDetailLoad', $event)"
         :parentIdTree="computeCurrentParentIdTree(page.id)"
         :datas="page.children"
+        :groupId="groupId"
         :treeNest="treeNest + 1"
         @click="$emit('click', $event)"
       />
@@ -26,6 +38,8 @@
 
 <script>
 import treeComponent from "../components/treeComponent";
+import RegisterPageComponent from "./RegisterPageComponent";
+import ModalComponent from "../UIParts/Lv1/Modal";
 import HidingIcon from "../UIParts/Lv1/HidingIcon";
 import modelFactory from "../model/index";
 const pageModel = modelFactory.get("page");
@@ -34,11 +48,17 @@ export default {
   name: "treeComponent",
   components: {
     HidingIcon,
-    treeComponent
+    treeComponent,
+    ModalComponent,
+    RegisterPageComponent
   },
   props: {
     datas: {
       type: Array,
+      required: true
+    },
+    groupId: {
+      type: Number,
       required: true
     },
     treeNest: {
@@ -55,10 +75,42 @@ export default {
   },
   data: function() {
     return {
-      pageData: this.datas.concat()
+      pageData: this.datas.concat(),
+      showRegisterModal: -1
     };
   },
+  updated() {
+    console.log("tree updated");
+  },
   methods: {
+    pageKey: function(page) {
+      if (page.children) {
+        return page.id + page.name + page.children.length;
+      } else {
+        return page.id + page.name;
+      }
+    },
+    onSubmitCreatePageHandler: async function(event, groupId, parentId, index) {
+      const payload = {
+        isFile: event.isfile,
+        name: event.name,
+        group_id: groupId,
+        parent_id: parentId
+      };
+      const res = await pageModel.createPage(payload);
+      if (this.pageData[index].children) {
+        // 既にアコーディオンが開かれていた子供データを取得していた場合
+        let temp = JSON.parse(JSON.stringify(this.pageData));
+        temp[index].children.unshift(res);
+        this.pageData = temp;
+      } else {
+        // 子供データを取得していなかった場合、子供データのrerenderは必要なし
+        return;
+      }
+    },
+    onClickPageAddHandler: function(pageId) {
+      this.showRegisterModal = pageId;
+    },
     computeCurrentParentIdTree: function(id) {
       let newArray = this.parentIdTree.concat();
       newArray.push(id);

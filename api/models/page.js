@@ -7,14 +7,6 @@ const Page = db.define('page', {
   parent_id: Sequelize.INTEGER,
   isfile: Sequelize.BOOLEAN,
   group_id: Sequelize.INTEGER,
-  created_at: {
-    allowNull: false,
-    type: Sequelize.DATE
-  },
-  updated_at: {
-    allowNull: false,
-    type: Sequelize.DATE
-  }
 }, {
   underscored: true,
 });
