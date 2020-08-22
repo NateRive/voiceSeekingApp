@@ -18,12 +18,15 @@ class GCP {
   // クラウドストレージサービス
   async getSignedURL(path) {
     const file = myBucket.file(path)
+    console.log("aaaa", file)
     const urls = await file.getSignedUrl({
       action: "read",
       expires: Date.now() + 3600000
     }).catch(err => {
       throw err;
     });
+    console.log("yes", urls)
+    return "https://storage.cloud.google.com/audio-demo/1/1/1/koreaproblem1.flac?hl=ja"
     return urls[0]
   }
 

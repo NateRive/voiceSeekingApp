@@ -40,6 +40,7 @@ export default {
     fileModel
       .get(pathTree)
       .then(url => {
+        console.log(url);
         this.audioSrc = url;
       })
       .catch(err => {
